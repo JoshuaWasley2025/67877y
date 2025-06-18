@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <title>Journal Joy | Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        textarea { resize: vertical; min-height: 80px; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex font-sans text-gray-800">
+
+<!-- Sidebar -->
+<aside class="bg-white w-64 shadow-lg min-h-screen hidden md:flex flex-col" role="navigation" aria-label="Sidebar navigation">
+    <div class="p-6 text-center">
+        <img src="https://testing.techurasolutions.xyz/JournalJoy.png" alt="JournalJoy Logo" class="h-12 mb-4 mx-auto" />
+        <nav>
+            <ul class="space-y-3 text-gray-700 font-medium">
+                <li><a href="dashboard.html" class="block py-2 px-4 bg-blue-600 text-white rounded" aria-current="page">Dashboard</a></li>
+                <li><a href="profile.html" class="block py-2 px-4 hover:bg-blue-100 rounded">Profile</a></li>
+                <li><a href="settings.html" class="block py-2 px-4 hover:bg-blue-100 rounded">Settings</a></li>
+                <li><a href="support.html" class="block py-2 px-4 hover:bg-blue-100 rounded">Support</a></li>
+                <li><a href="index.html" class="block py-2 px-4 hover:bg-red-100 text-red-600 font-semibold rounded">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+<!-- Main Content -->
+<main class="flex-1 p-8 max-w-7xl mx-auto w-full" role="main">
+    <header class="mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+        <div>
+            <h1 class="text-4xl font-extrabold" tabindex="0">Welcome, <span class="text-blue-600">John Doe</span></h1>
+            <p class="text-gray-500" id="greetingMessage"></p>
+        </div>
+        <a href="profile.html" class="text-blue-600 font-semibold hover:underline">View Profile</a>
+    </header>
+
+    <!-- Example notification -->
+    <div class="mb-6 px-4 py-3 rounded border bg-green-50 border-green-400 text-green-800" role="alert" aria-live="polite" aria-atomic="true">
+        <strong class="capitalize">Success:</strong> Welcome to your dashboard!
+    </div>
+
+    <!-- Summary -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10" aria-label="User summary and stats">
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Account Info</h2>
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Email:</strong> john.doe@example.com</p>
+            <p><strong>Account ID:</strong> 12345</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Journal Stats</h2>
+            <p><strong>Total Entries:</strong> 2</p>
+            <p><strong>Last Entry:</strong> January 15, 2024</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Activity Log</h2>
+            <p class="text-sm text-gray-500">Recent activities will be displayed here</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Comments</h2>
+            <p class="text-sm text-gray-500">Comments will be displayed here</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4">Other Links</h2>
+            <p class="text-sm text-gray-500">Find All Your Links Here!</p>
+        </div>
+    </section>
+
+    <!-- New Journal Entry -->
+    <section>
+        <div class="bg-white rounded-lg shadow p-6 mb-10">
+            <h2 class="text-xl font-semibold mb-4">New Journal Entry</h2>
+            <form class="space-y-3" onsubmit="handleNewEntry(event)">
+                <label for="journal_title" class="sr-only">Journal Title</label>
+                <input
+                    type="text" id="journal_title" name="journal_title" placeholder="Title" required
+                    class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-required="true"
+                />
+                <label for="journal_content" class="sr-only">Journal Content</label>
+                <textarea
+                    id="journal_content" name="journal_content" placeholder="Write something..." required
+                    class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-required="true"
+                ></textarea>
+                <button
+                    type="submit"
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700"
+                >Add Entry</button>
+            </form>
+        </div>
+
+        <!-- Sample Entries -->
+        <h2 class="text-2xl font-bold mb-4">Your Entries</h2>
+        <ul class="space-y-6">
+            <li class="bg-white border rounded p-4 shadow" aria-label="Journal entry titled My First Entry">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-semibold text-lg">My First Entry</h3>
+                    <div class="space-x-3">
+                        <button
+                            type="button"
+                            onclick="toggleEdit(1)"
+                            class="text-blue-600 hover:underline"
+                            aria-expanded="false"
+                            aria-controls="edit-1"
+                        >Edit</button>
+                        <button onclick="handleDelete(1)" class="text-red-600 hover:underline">Delete</button>
+                    </div>
+                </div>
+                <p class="whitespace-pre-wrap mt-2">This is my first journal entry. I'm excited to start journaling!</p>
+                <small class="text-gray-500 block mt-2">January 15, 2024 10:30 AM</small>
+
+                <!-- Edit form -->
+                <form id="edit-1" class="hidden mt-4 space-y-2" aria-label="Edit journal entry form" onsubmit="handleEdit(event, 1)">
+                    <input
+                        type="text" name="edit_journal_title" value="My First Entry" required
+                        class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                        aria-required="true"
+                    />
+                    <textarea
+                        name="edit_journal_content" required
+                        class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                        aria-required="true"
+                    >This is my first journal entry. I'm excited to start journaling!</textarea>
+                    <button
+                        type="submit"
+                        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-700"
+                    >Save Changes</button>
+                    <button type="button" onclick="toggleEdit(1)" class="ml-2 text-gray-500 hover:text-gray-800">Cancel</button>
+                </form>
+            </li>
+
+            <li class="bg-white border rounded p-4 shadow" aria-label="Journal entry titled Today's Thoughts">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-semibold text-lg">Today's Thoughts</h3>
+                    <div class="space-x-3">
+                        <button
+                            type="button"
+                            onclick="toggleEdit(2)"
+                            class="text-blue-600 hover:underline"
+                            aria-expanded="false"
+                            aria-controls="edit-2"
+                        >Edit</button>
+                        <button onclick="handleDelete(2)" class="text-red-600 hover:underline">Delete</button>
+                    </div>
+                </div>
+                <p class="whitespace-pre-wrap mt-2">Reflecting on my day and planning for tomorrow.</p>
+                <small class="text-gray-500 block mt-2">January 15, 2024 8:45 PM</small>
+
+                <!-- Edit form -->
+                <form id="edit-2" class="hidden mt-4 space-y-2" aria-label="Edit journal entry form" onsubmit="handleEdit(event, 2)">
+                    <input
+                        type="text" name="edit_journal_title" value="Today's Thoughts" required
+                        class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                        aria-required="true"
+                    />
+                    <textarea
+                        name="edit_journal_content" required
+                        class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                        aria-required="true"
+                    >Reflecting on my day and planning for tomorrow.</textarea>
+                    <button
+                        type="submit"
+                        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-700"
+                    >Save Changes</button>
+                    <button type="button" onclick="toggleEdit(2)" class="ml-2 text-gray-500 hover:text-gray-800">Cancel</button>
+                </form>
+            </li>
+        </ul>
+    </section>
+</main>
+
+<script>
+function setGreeting() {
+    const hour = new Date().getHours();
+    let greeting;
+    
+    if (hour >= 5 && hour < 12) {
+        greeting = "Good morning";
+    } else if (hour >= 12 && hour < 17) {
+        greeting = "Good afternoon";
+    } else if (hour >= 17 && hour < 22) {
+        greeting = "Good evening";
+    } else {
+        greeting = "Good night";
+    }
+    
+    document.getElementById('greetingMessage').textContent = greeting + "! We hope you're having a great day.";
+}
+
+window.addEventListener('load', setGreeting);
+
+function toggleEdit(id) {
+    const form = document.getElementById('edit-' + id);
+    if (!form) return;
+    const isHidden = form.classList.contains('hidden');
+    form.classList.toggle('hidden', !isHidden);
+
+    // Update aria-expanded attribute on edit button
+    const editButton = form.previousElementSibling.querySelector('button[aria-expanded]');
+    if (editButton) {
+        editButton.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    }
+}
+
+function handleNewEntry(event) {
+    event.preventDefault();
+    alert('In a real application, this would save a new journal entry to the database.');
+}
+
+function handleEdit(event, id) {
+    event.preventDefault();
+    alert('In a real application, this would update the journal entry in the database.');
+}
+
+function handleDelete(id) {
+    if (confirm('Delete this entry?')) {
+        alert('In a real application, this would delete the entry from the database.');
+    }
+}
+</script>
+
+</body>
+</html>
